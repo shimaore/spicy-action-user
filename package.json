@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/shimaore/spicy-action-user/issues"
   },
-  "homepage": "https://github.com/shimaore/spicy-action-user"
+  "homepage": "https://github.com/shimaore/spicy-action-user",
+  "dependencies": {
+    "seem": "^1.1.1"
+  }
 }

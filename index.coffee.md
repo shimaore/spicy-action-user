@@ -1,3 +1,5 @@
+    seem = require 'seem'
+
     @include = ->
 
       return unless @cfg.users?.db?
