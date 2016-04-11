@@ -1,0 +1,21 @@
+{
+  "name": "spicy-action-user",
+  "version": "1.0.0",
+  "description": "User parameters (locale,timezone) for spicy-action",
+  "main": "index.js",
+  "scripts": {
+    "prepublish": "coffee -c index.coffee.md",
+    "pretest": "npm install",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/shimaore/spicy-action-user"
+  },
+  "author": "Stéphane Alnet <stephane@shimaore.net> (http://stephane.shimaore.net/)",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/shimaore/spicy-action-user/issues"
+  },
+  "homepage": "https://github.com/shimaore/spicy-action-user"
+}
