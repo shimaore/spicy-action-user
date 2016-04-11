@@ -42,14 +42,16 @@
 
     @middleware = seem ->
 
-      return unless @cfg.users?.db?
+      unless @cfg.users?.db?
+        @next()
+        return
 
 Retrieve CouchDB data (locale, timezone, extra roles) for the user.
 
 * cfg.users.db (URI) Points to the `users` database, including authentication.
 * cfg.users.prefix (string) Prefix for user IDs [default: `org.couchdb.user`]
 
-      doc = @get_user()
+      doc = yield @get_user()
 
 The user record might not exist, or might be empty, etc.
 
@@ -59,3 +61,5 @@ The user record might not exist, or might be empty, etc.
         @session.couchdb_roles ?= []
         for r in doc.roles when r not in @session.couchdb_roles
           @session.couchdb_roles.push r
+
+      @next
