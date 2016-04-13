@@ -64,4 +64,4 @@ The user record might not exist, or might be empty, etc.
         for r in doc.roles when r not in @session.couchdb_roles
           @session.couchdb_roles.push r
 
-      @next
+      @next()
