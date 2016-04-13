@@ -7,12 +7,12 @@
 
       prefix = @cfg.users.prefix ?= 'org.couchdb.user'
 
-      @user_db = new PouchDB @cfg.users.db
+      user_db = new PouchDB @cfg.users.db
 
       @helper get_user: ->
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
-        @user_db
+        user_db
           .get _id
           .catch -> {_id,name,roles:[],type:'user'}
 
@@ -22,7 +22,7 @@
         doc.locale = @session.locale
         doc.timezone = @session.timezone
 
-        @user_db
+        user_db
           .put doc
 
       @on 'set_locale', seem (locale) ->
