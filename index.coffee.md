@@ -1,4 +1,5 @@
     seem = require 'seem'
+    PouchDB = require 'pouchdb'
 
     @include = ->
 
