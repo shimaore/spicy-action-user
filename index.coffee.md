@@ -57,6 +57,7 @@ The user record might not exist, or might be empty, etc.
 
       @session.locale ?= doc.locale
       @session.timezone ?= doc.timezone
+      @session.database ?= doc.database
       if doc.roles?
         @session.couchdb_roles ?= []
         for r in doc.roles when r not in @session.couchdb_roles
