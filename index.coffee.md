@@ -23,6 +23,8 @@
 
         doc.locale = @session.locale
         doc.timezone = @session.timezone
+        if not doc.database? and @session.database?
+          doc.database = @session.database
 
         user_db
           .put doc
