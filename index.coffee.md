@@ -9,6 +9,8 @@
 
       user_db = new PouchDB @cfg.users.db
 
+* doc.user._id (string) `<cfg.users.prefix>:<couchdb_username>`
+
       @helper get_user: ->
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
@@ -33,6 +35,11 @@
         else
           @ack failed: true
 
+      @put '/locale/:locale', seem ->
+        @session.locale = @params.locale
+        res = yield @save_user().catch {}
+        @json if res.ok then ok:true else failed:true
+
       @on 'set_timezone', seem (timezone) ->
         @session.timezone = timezone
         res = yield @save_user().catch {}
@@ -40,6 +47,11 @@
           @ack ok:true
         else
           @ack failed: true
+
+      @put '/timezone/:timezone', seem ->
+        @session.timezone = @params.locale
+        res = yield @save_user().catch {}
+        @json if res.ok then ok:true else failed:true
 
     @middleware = seem ->
 
@@ -55,6 +67,11 @@ Retrieve CouchDB data (locale, timezone, extra roles) for the user.
       doc = yield @get_user()
 
 The user record might not exist, or might be empty, etc.
+
+* doc.user.locale (string) user locale
+* doc.user.timezone (string) user timezone
+* doc.user.database (string) user database
+* doc.user.roles (array) user roles
 
       @session.locale ?= doc.locale
       @session.timezone ?= doc.timezone
