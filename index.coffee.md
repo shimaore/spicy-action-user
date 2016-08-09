@@ -56,6 +56,9 @@
         res = yield @save_user().catch {}
         @json if res.ok then ok:true else failed:true
 
+Authenticate using number and voicemail PIN
+-------------------------------------------
+
       @post '/vm-auth', jsonBody, seem ->
 
         if @session.couchdb_token?
@@ -136,6 +139,11 @@ Authenticated OK
           ok:true
           username: @session.couchdb_username
           roles: @session.couchdb_roles
+
+Middleware
+==========
+
+Inject `locale`, `timezone`, and `database` into the session.
 
     @middleware = seem ->
 
