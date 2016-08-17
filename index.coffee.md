@@ -1,6 +1,6 @@
     seem = require 'seem'
     PouchDB = require 'pouchdb'
-    jsonBody = require 'body/json'
+    jsonBody = (require 'body-parser').json {}
 
     @include = ->
 
