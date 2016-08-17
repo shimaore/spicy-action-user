@@ -2,6 +2,9 @@
     PouchDB = require 'pouchdb'
     jsonBody = (require 'body-parser').json {}
 
+    @name = "#{(require './package').name}:vm-auth"
+    debug  = (require 'debug') @name
+
     @include = ->
 
 Authenticate using number and voicemail PIN
@@ -20,7 +23,10 @@ See well-groomed-feast/src/Messaging.coffee.md for the process
 
 Ensure all parameters are present
 
-        unless number? and number_domain? and pin?
+        unless number? and number_domain? and pin?  and
+            typeof number is 'string' and
+            typeof number_domain is 'string' and
+            typeof pin is 'string'
           @res.status 400
           @json error:'Invalid parameters'
           return
@@ -29,6 +35,8 @@ Translate the local number
 
         new_number = @translate_local_number? number, number_domain
         number = new_number if new_number?
+
+        debug 'values', {number,number_domain}
 
         user_id = "#{number}@#{number_domain}"
 
