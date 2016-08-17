@@ -28,7 +28,7 @@ Ensure all parameters are present
             typeof number_domain is 'string' and
             typeof pin is 'string'
           @res.status 400
-          @json error:'Invalid parameters'
+          @json error:'Invalid parameters', parameters: @body
           return
 
 Translate the local number
