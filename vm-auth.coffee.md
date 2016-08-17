@@ -94,8 +94,15 @@ Authenticated OK
           "user_database:#{user_database}"
         ]
         @session.full_name = user_id
+        @session.couchdb_token = hex_hmac_sha1 @cfg.couchdb_secret, @session.couchdb_username
 
         @json
           ok:true
           username: @session.couchdb_username
           roles: @session.couchdb_roles
+
+    crypto = require 'crypto'
+    hex_hmac_sha1 = (key,value) ->
+      hmac = crypto.createHmac 'sha1', key
+      hmac.update value
+      hmac.digest 'hex'
