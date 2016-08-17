@@ -48,6 +48,7 @@ Translate the local number
             if data?.disabled then {} else data
 
         unless number_data?._id?
+          debug 'No _id in', {number_data}
           @res
             .status 404
             .end()
@@ -58,6 +59,7 @@ Retrieve the user database
         {user_database} = number_data
 
         unless user_database?
+          debug 'No user_database in', {number_data}
           @res
             .status 404
             .end()
