@@ -33,10 +33,12 @@ Ensure all parameters are present
 
 Translate the local number
 
-        new_number = @translate_local_number? number, number_domain
+        debug 'before translation', {number,number_domain}
+
+        new_number = yield @translate_local_number? number, number_domain
         number = new_number if new_number?
 
-        debug 'values', {number,number_domain}
+        debug 'after translation', {number,number_domain}
 
         user_id = "#{number}@#{number_domain}"
 
