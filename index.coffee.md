@@ -1,6 +1,9 @@
     seem = require 'seem'
     PouchDB = require 'pouchdb'
 
+    @name = (require './package').name
+    debug = (require 'debug') @name
+
     @include = ->
 
       return unless @cfg.users?.db?
@@ -14,6 +17,7 @@
       @helper get_user: ->
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
+        debug 'get_user', {name,_id}
         user_db
           .get _id
           .catch -> {_id,name,roles:[],type:'user'}
@@ -25,6 +29,8 @@
         doc.timezone = @session.timezone
         if not doc.database? and @session.database?
           doc.database = @session.database
+
+        debug 'save_user', doc
 
         user_db
           .put doc
