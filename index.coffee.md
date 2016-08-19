@@ -15,6 +15,7 @@
 * doc.user._id (string) `<cfg.users.prefix>:<couchdb_username>`
 
       @helper get_user: ->
+        return unless @session.couchdb_username
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
         debug 'get_user', {name,_id}
@@ -23,6 +24,7 @@
           .catch -> {_id,name,roles:[],type:'user'}
 
       @helper save_user: seem ->
+        return unless @session.couchdb_username
         doc = yield @get_user()
 
         doc.locale = @session.locale
