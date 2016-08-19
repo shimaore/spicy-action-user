@@ -37,6 +37,34 @@
         user_db
           .put doc
 
+      @helper load_user: seem ->
+        unless @cfg.users?.db?
+          return
+
+Retrieve CouchDB data (locale, timezone, extra roles) for the user.
+
+* cfg.users.db (URI) Points to the `users` database, including authentication.
+* cfg.users.prefix (string) Prefix for user IDs [default: `org.couchdb.user`]
+
+        doc = yield @get_user()
+
+The user record might not exist, or might be empty, etc.
+
+* doc.user.locale (string) user locale
+* doc.user.timezone (string) user timezone
+* doc.user.database (string) user database
+* doc.user.roles (array) user roles
+
+        @session.locale ?= doc.locale
+        @session.timezone ?= doc.timezone
+        @session.database ?= doc.database
+        if doc.roles?
+          @session.couchdb_roles ?= []
+          for r in doc.roles when r not in @session.couchdb_roles
+            @session.couchdb_roles.push r
+
+        return
+
       @on 'set_locale', seem (locale) ->
         @session.locale = locale
         res = yield @save_user().catch {}
@@ -70,30 +98,8 @@ Inject `locale`, `timezone`, and `database` into the session.
 
     @middleware = seem ->
 
-      unless @cfg.users?.db?
-        @next()
-        return
-
-Retrieve CouchDB data (locale, timezone, extra roles) for the user.
-
-* cfg.users.db (URI) Points to the `users` database, including authentication.
-* cfg.users.prefix (string) Prefix for user IDs [default: `org.couchdb.user`]
-
-      doc = yield @get_user()
-
-The user record might not exist, or might be empty, etc.
-
-* doc.user.locale (string) user locale
-* doc.user.timezone (string) user timezone
-* doc.user.database (string) user database
-* doc.user.roles (array) user roles
-
-      @session.locale ?= doc.locale
-      @session.timezone ?= doc.timezone
-      @session.database ?= doc.database
-      if doc.roles?
-        @session.couchdb_roles ?= []
-        for r in doc.roles when r not in @session.couchdb_roles
-          @session.couchdb_roles.push r
+      yield @load_user()
+        .catch (error) ->
+          debug "load_user failed: #{error}"
 
       @next()
