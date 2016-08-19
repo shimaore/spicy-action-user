@@ -1,6 +1,6 @@
 {
   "name": "spicy-action-user",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "User parameters (locale,timezone) for spicy-action",
   "main": "index.js",
   "scripts": {
