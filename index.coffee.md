@@ -41,6 +41,9 @@
         unless @cfg.users?.db?
           return
 
+        unless @session?
+          return
+
 Retrieve CouchDB data (locale, timezone, extra roles) for the user.
 
 * cfg.users.db (URI) Points to the `users` database, including authentication.
