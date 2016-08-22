@@ -15,7 +15,9 @@
 * doc.user._id (string) `<cfg.users.prefix>:<couchdb_username>`
 
       @helper get_user: ->
-        return unless @session.couchdb_username
+        unless @session.couchdb_username?
+          return null
+
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
         debug 'get_user', {name,_id}
@@ -24,7 +26,9 @@
           .catch -> {_id,name,roles:[],type:'user'}
 
       @helper save_user: seem ->
-        return unless @session.couchdb_username
+        unless @session.couchdb_username?
+          return {}
+
         doc = yield @get_user()
 
         doc.locale = @session.locale
@@ -38,6 +42,9 @@
           .put doc
 
       @helper load_user: seem ->
+        unless @session.couchdb_username?
+          return
+
         unless @cfg.users?.db?
           return
 
@@ -71,10 +78,7 @@ The user record might not exist, or might be empty, etc.
       @on 'set_locale', seem (locale) ->
         @session.locale = locale
         res = yield @save_user().catch {}
-        if res.ok
-          @ack ok:true
-        else
-          @ack failed: true
+        @ack if res.ok then ok:true else failed:true
 
       @put '/locale/:locale', seem ->
         @session.locale = @params.locale
@@ -84,10 +88,7 @@ The user record might not exist, or might be empty, etc.
       @on 'set_timezone', seem (timezone) ->
         @session.timezone = timezone
         res = yield @save_user().catch {}
-        if res.ok
-          @ack ok:true
-        else
-          @ack failed: true
+        @ack if res.ok then ok:true else failed:true
 
       @put '/timezone/:timezone', seem ->
         @session.timezone = @params.locale
