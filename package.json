@@ -22,7 +22,8 @@
     "body-parser": "^1.15.2",
     "debug": "^2.2.0",
     "pouchdb": "^6.0.7",
-    "seem": "^2.0.0"
+    "seem": "^2.0.0",
+    "shimaore-pouchdb": "^6.1.0-prerelease"
   },
   "devDependencies": {
     "coffee-script": "^1.11.1",
