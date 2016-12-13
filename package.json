@@ -23,7 +23,7 @@
     "debug": "^2.3.3",
     "pouchdb": "^6.0.7",
     "seem": "^2.0.0",
-    "shimaore-pouchdb": "^6.1.0-prerelease"
+    "shimaore-pouchdb": "^6.1.0"
   },
   "devDependencies": {
     "coffee-script": "^1.12.1",
