@@ -42,13 +42,10 @@
           .put doc
 
       @helper load_user: seem ->
-        unless @session.couchdb_username?
+        unless @session?.couchdb_username?
           return
 
         unless @cfg.users?.db?
-          return
-
-        unless @session?
           return
 
 Retrieve CouchDB data (locale, timezone, extra roles) for the user.
