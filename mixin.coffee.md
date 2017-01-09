@@ -1,7 +1,6 @@
 A rightful-hot mixin to support spicy-action-user
 
-    pkg = require './package.json'
-    debug = (require 'debug') "#{pkg.name}:mixin"
+    debug = (require 'debug') "spicy-action-user:mixin"
 
     module.exports = ->
       init: ->
