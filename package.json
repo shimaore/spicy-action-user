@@ -4,7 +4,7 @@
   "description": "User parameters (locale,timezone) for spicy-action",
   "main": "index.js",
   "scripts": {
-    "prepublish": "coffee -c -M index.coffee.md",
+    "prepublish": "coffee -c -M *.coffee.md",
     "pretest": "npm install",
     "test": "mocha"
   },
