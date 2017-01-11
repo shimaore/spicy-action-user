@@ -10,9 +10,6 @@ A rightful-hot mixin and store to support spicy-action-user
         @ev.on 'user-data', (user) =>
           @update {user}
 
-        @on 'mount', =>
-          @ev.trigger 'get-user-data'
-
       include: ->
 
 Notification from server with user-data.
