@@ -1,4 +1,4 @@
-A rightful-hot mixin to support spicy-action-user
+A rightful-hot mixin and store to support spicy-action-user
 
     debug = (require 'debug') "spicy-action-user:mixin"
 
@@ -12,13 +12,16 @@ A rightful-hot mixin to support spicy-action-user
             # debug 'user-data', user
             @update {user}
 
-      include: ({ev}) ->
+      include: ->
 
-The `ready` event from the server-side provides `user_data`.
+Notification from server with user-data.
 
         @on 'ready', ->
           debug 'received ready', @data
-
-Return user-data
-
           @ev.trigger 'user-data', @data
+
+Notification from client with user parameter.
+
+        @ev.on 'set-user-param', (name,value) ->
+          debug 'set-user-param', name, value
+          @emit 'set_user_param', name, value
