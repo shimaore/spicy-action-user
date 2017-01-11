@@ -35,6 +35,10 @@
         doc.timezone = @session.timezone
         if not doc.database? and @session.database?
           doc.database = @session.database
+        if @session.user_params?
+          doc.params ?= {}
+          for own k,v of @session.user_params
+            doc.params[k] = v
 
         debug 'save_user', doc
 
@@ -61,16 +65,32 @@ The user record might not exist, or might be empty, etc.
 * doc.user.timezone (string) user timezone
 * doc.user.database (string) user database
 * doc.user.roles (array) user roles
+* doc.user.params (object) user personalisation parameters (beyond doc.user.locale and doc.user.timezone)
+* session.user_params user personalization parameters; initialized from doc.user.params
 
         @session.locale ?= doc.locale
         @session.timezone ?= doc.timezone
         @session.database ?= doc.database
+        @session.user_params ?= doc.params
         if doc.roles?
           @session.couchdb_roles ?= []
           for r in doc.roles when r not in @session.couchdb_roles
             @session.couchdb_roles.push r
 
         return
+
+User parameters
+---------------
+
+      @on 'set_user_param', seem (name,value) ->
+        unless name? and typeof name is 'string'
+          @ack failed:true
+          return
+
+        @session.user_params ?= {}
+        @session.user_params[name] = value
+        res = yield @save_user().catch {}
+        @ack if res.ok then ok:true else failed:true
 
       @on 'set_locale', seem (locale) ->
         @session.locale = locale
@@ -95,7 +115,7 @@ The user record might not exist, or might be empty, etc.
 Middleware
 ==========
 
-Inject `locale`, `timezone`, and `database` into the session.
+Inject `locale`, `timezone`, `database`, and `user_params` into the session.
 
     @middleware = seem ->
 
