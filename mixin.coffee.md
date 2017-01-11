@@ -7,10 +7,10 @@ A rightful-hot mixin and store to support spicy-action-user
 
         @user = {admin:false}
 
-        @on 'mount', ->
-          @ev.on 'user-data', (user) =>
-            @update {user}
+        @ev.on 'user-data', (user) =>
+          @update {user}
 
+        @on 'mount', =>
           @ev.trigger 'get-user-data'
 
       include: ->
