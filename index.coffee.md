@@ -66,7 +66,11 @@ The user record might not exist, or might be empty, etc.
 * doc.user.database (string) user database
 * doc.user.roles (array) user roles
 * doc.user.params (object) user personalisation parameters (beyond doc.user.locale and doc.user.timezone)
+* session.locale user locale; initialized from doc.user.locale
+* session.timezone user timezone; initialized from doc.user.timezone
+* session.database user private database; initialized from doc.user.database
 * session.user_params user personalization parameters; initialized from doc.user.params
+* session.couchdb_roles extended by doc.user.roles (beyond the roles automatically assigned elsewhere)
 
         @session.locale ?= doc.locale
         @session.timezone ?= doc.timezone
@@ -92,6 +96,9 @@ User parameters
         res = yield @save_user().catch {}
         @ack if res.ok then ok:true else failed:true
 
+Locale
+------
+
       @on 'set_locale', seem (locale) ->
         @session.locale = locale
         res = yield @save_user().catch {}
@@ -101,6 +108,9 @@ User parameters
         @session.locale = @params.locale
         res = yield @save_user().catch {}
         @json if res.ok then ok:true else failed:true
+
+Timezone
+--------
 
       @on 'set_timezone', seem (timezone) ->
         @session.timezone = timezone
