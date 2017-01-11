@@ -28,5 +28,8 @@
   "devDependencies": {
     "coffee-script": "^1.12.1",
     "mocha": "^3.2.0"
+  },
+  "peerDependencies": {
+    "rightful-hot": "^3.1"
   }
 }
