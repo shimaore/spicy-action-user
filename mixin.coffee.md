@@ -20,6 +20,11 @@ Notification from server with user-data.
           debug 'received ready', @data
           @ev.trigger 'user-data', @data
 
+On ZappaJS-client ready we send a generic `subscribe` message.
+In response, the server will emit `ready`.
+
+        @emit 'join'
+
 Notification from client with user parameter.
 
         @ev.on 'set-user-param', (name,value) ->
