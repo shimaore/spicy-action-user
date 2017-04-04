@@ -17,7 +17,7 @@ A rightful-hot mixin and store to support spicy-action-user
 
 Used for testing.
 
-        @ev.on 'set-user-data', (data) ->
+        @ev.on 'set-user-data', (data) =>
           for own k, v of data
             user[k] = v
           @ev.trigger 'user-data', user
