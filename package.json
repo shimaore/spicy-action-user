@@ -21,9 +21,9 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "debug": "^2.3.3",
-    "pouchdb": "^6.0.7",
+    "pouchdb": "6.1.1",
     "seem": "^2.0.0",
-    "shimaore-pouchdb": "^6.1.0"
+    "shimaore-pouchdb": "6.1.1"
   },
   "devDependencies": {
     "coffee-script": "^1.12.1",
