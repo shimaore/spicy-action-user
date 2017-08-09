@@ -1,5 +1,5 @@
     seem = require 'seem'
-    PouchDB = require 'shimaore-pouchdb'
+    PouchDB = require 'pouchdb'
     jsonBody = (require 'body-parser').json {}
 
     @name = "#{(require './package').name}:vm-auth"
