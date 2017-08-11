@@ -1,5 +1,6 @@
     seem = require 'seem'
-    PouchDB = require 'pouchdb'
+    PouchDB = require 'pouchdb-core'
+      .plugin require 'pouchdb-adapter-http'
 
     @name = (require './package').name
     debug = (require 'debug') @name

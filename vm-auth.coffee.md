@@ -1,5 +1,6 @@
     seem = require 'seem'
-    PouchDB = require 'pouchdb'
+    PouchDB = require 'pouchdb-core'
+      .plugin require 'pouchdb-adapter-http'
     jsonBody = (require 'body-parser').json {}
 
     @name = "#{(require './package').name}:vm-auth"
