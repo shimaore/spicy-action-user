@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/shimaore/spicy-action-user",
   "dependencies": {
-    "body-parser": "^1.17.1",
+    "body-parser": "^1.17.2",
     "debug": "^3.0.0",
     "pouchdb-adapter-http": "^6.3.4",
     "pouchdb-core": "^6.3.4",
