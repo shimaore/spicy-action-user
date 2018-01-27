@@ -20,9 +20,8 @@
   "homepage": "https://github.com/shimaore/spicy-action-user",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "ccnq4-pouchdb": "^1.0.0",
     "debug": "^3.0.0",
-    "pouchdb-adapter-http": "^6.3.4",
-    "pouchdb-core": "^6.3.4",
     "seem": "^2.0.0"
   },
   "devDependencies": {
