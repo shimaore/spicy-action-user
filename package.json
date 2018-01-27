@@ -4,8 +4,9 @@
   "description": "User parameters (locale,timezone) for spicy-action",
   "main": "index.js",
   "scripts": {
-    "prepublish": "coffee -c -M *.coffee.md",
-    "pretest": "npm install",
+    "build": "coffee -c -M *.coffee.md",
+    "prepublishOnly": "npm install --only=dev && rm package-lock.json && npm run build",
+    "pretest": "npm install && npm run build",
     "test": "mocha"
   },
   "repository": {
@@ -19,15 +20,15 @@
   },
   "homepage": "https://github.com/shimaore/spicy-action-user",
   "dependencies": {
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.2",
     "ccnq4-pouchdb": "^1.0.0",
-    "debug": "^3.0.0",
+    "debug": "^3.1.0",
     "lru": "^3.1.0",
     "seem": "^2.0.0"
   },
   "devDependencies": {
     "coffee-script": "^1.12.7",
-    "mocha": "^3.5.0"
+    "mocha": "^5.0.0"
   },
   "peerDependencies": {
     "rightful-hot": "^3.2"
