@@ -41,16 +41,27 @@
 
         doc = yield @get_user()
 
+        changes = false
+
+        changes or= doc.locale isnt @session.locale
         doc.locale = @session.locale
+
+        changes or= doc.timezone isnt @session.timezone
         doc.timezone = @session.timezone
+
         if not doc.database? and @session.database?
+          changes or= doc.database isnt @session.database
           doc.database = @session.database
+
         if @session.user_params?
           doc.params ?= {}
           for own k,v of @session.user_params
+            changes or= doc.params[k] isnt v
             doc.params[k] = v
 
         debug 'save_user', doc
+
+        return if not changes
 
         user_db
           .put doc
@@ -115,7 +126,8 @@ Locale
         @ack if res.ok then ok:true else failed:true
 
       @put '/locale/:locale', seem ->
-        @session.locale = @params.locale
+        {locale} = @params
+        @session.locale = locale
         res = yield @save_user().catch {}
         @json if res.ok then ok:true else failed:true
 
@@ -128,7 +140,8 @@ Timezone
         @ack if res.ok then ok:true else failed:true
 
       @put '/timezone/:timezone', seem ->
-        @session.timezone = @params.locale
+        {timezone} = @params
+        @session.timezone = timezone
         res = yield @save_user().catch {}
         @json if res.ok then ok:true else failed:true
 
