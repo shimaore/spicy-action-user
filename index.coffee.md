@@ -1,6 +1,6 @@
     seem = require 'seem'
-    PouchDB = require 'pouchdb-core'
-      .plugin require 'pouchdb-adapter-http'
+    PouchDB = require 'ccnq4-pouchdb'
+    LRU = require 'lru'
 
     @name = (require './package').name
     debug = (require 'debug') @name
@@ -15,6 +15,8 @@
 
 * doc.user._id (string) `<cfg.users.prefix>:<couchdb_username>`
 
+      users = new LRU 500
+
       @helper get_user: ->
         unless @session.couchdb_username?
           return null
@@ -22,9 +24,16 @@
         name = @session.couchdb_username
         _id = [prefix,name].join ':'
         debug 'get_user', {name,_id}
+
+        data = users.get _id
+        return Promise.resolve data if data?
+
         user_db
           .get _id
           .catch -> {_id,name,roles:[],type:'user'}
+          .then (data) ->
+            users.set _id, data
+            data
 
       @helper save_user: seem ->
         unless @session.couchdb_username?
